@@ -18,6 +18,7 @@ class _DashboardState extends State<Dashboard> {
   bool _isRunning = false;
   Timer? _timer;
   List<String> _flags = [];
+  List<Recommendation> listFavorites = [];
 
   void _toggleTimer() {
     setState(() {
@@ -32,6 +33,16 @@ class _DashboardState extends State<Dashboard> {
     } else {
       _timer?.cancel();
     }
+  }
+
+  void _toggleFavorites(Recommendation recommendation) {
+    setState(() {
+      if (listFavorites.contains(recommendation)) {
+        listFavorites.remove(recommendation);
+      } else {
+        listFavorites.add(recommendation);
+      }
+    });
   }
 
   void _resetTimer() {
@@ -92,8 +103,8 @@ class _DashboardState extends State<Dashboard> {
                       _formatMilliseconds,
                       _addFlag,
                       _flags),
-                  linkReccomendation(context),
-                  favorite(context)
+                  linkReccomendation(context, listFavorites, _toggleFavorites),
+                  favorite(context, listFavorites)
                 ],
               ),
             ),
@@ -346,10 +357,11 @@ Widget stopwatch(
   ));
 }
 
-Widget linkReccomendation(BuildContext context) {
+Widget linkReccomendation(
+    BuildContext context, List _listFavorites, Function _toggleFavorites) {
   return (Column(
     children: [
-      Text('Link Reccomendation',
+      Text('Link Recommendation',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       SizedBox(height: 10),
       Container(
@@ -381,7 +393,6 @@ Widget linkReccomendation(BuildContext context) {
                             height: 100,
                             child: Image.network(item.imgUrl),
                           ),
-                          SizedBox(height: 10),
                           Text(item.name,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
@@ -389,6 +400,14 @@ Widget linkReccomendation(BuildContext context) {
                           Text(item.linkUri,
                               style: TextStyle(
                                   fontSize: 10, fontWeight: FontWeight.bold)),
+                          SizedBox(height: 10),
+                          IconButton(
+                              onPressed: () {
+                                _toggleFavorites(item);
+                              },
+                              icon: Icon(_listFavorites.contains(item)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border))
                         ]))),
               );
             }),
@@ -399,13 +418,7 @@ Widget linkReccomendation(BuildContext context) {
   ));
 }
 
-Widget favorite(BuildContext context) {
-  final List<Recommendation> listFavorite = [];
-  for (int i = 0; i < recommendationsList.length; i++) {
-    if (recommendationsList[i].isFavorite == true) {
-      listFavorite.add(recommendationsList[i]);
-    }
-  }
+Widget favorite(BuildContext context, List _listFavorites) {
   return (Column(
     children: [
       Text('Favorite',
@@ -419,9 +432,9 @@ Widget favorite(BuildContext context) {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
-            itemCount: listFavorite.length,
+            itemCount: _listFavorites.length,
             itemBuilder: (context, index) {
-              final Recommendation item = listFavorite[index];
+              final Recommendation item = _listFavorites[index];
               return InkWell(
                 onTap: () async {
                   final url = item.linkUri;
