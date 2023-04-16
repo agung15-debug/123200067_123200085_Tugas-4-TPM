@@ -102,3 +102,5 @@ var recommendationsList = [
     linkUri: 'https://drive.google.com/',
   ),
 ];
+
+var listFavorites = [];

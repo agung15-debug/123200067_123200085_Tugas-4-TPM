@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas4_tpm/dashboard.dart';
 
 class Panduan extends StatelessWidget {
   const Panduan({Key? key}) : super(key: key);
@@ -13,7 +12,6 @@ class Panduan extends StatelessWidget {
             backgroundColor: Colors.green,
             centerTitle: true,
           ),
-          drawer: NavigationDrawer(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -54,25 +52,6 @@ class Panduan extends StatelessWidget {
                   Image(image: AssetImage('images/favorite.png')),
                   Text(
                       'Pada Menu ini berisi Card - Card yang berisi gambar, nama aplikasi dan link dari aplikasi favorite penulis program. Ketika card ini diklik maka akan membuka link dari aplikasi tersebut.'),
-                  SizedBox(height: 10),
-                  Divider(color: Colors.black),
-                  Text('Sidebar',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Text('Pada sidebar terdapat 3 menu navigasi yaitu :'),
-                  SizedBox(height: 10),
-                  Text('1. Dashboard, berisi halaman awal dari aplikasi'),
-                  SizedBox(height: 10),
-                  Text(
-                      '2. Panduan Penggunaan, berfungsi untuk memberikan manual penggunaan aplikasi'),
-                  SizedBox(height: 10),
-                  Text(
-                      '3. Loguot, berfungsi untuk keluar dari aplikasi dan kembali ke halaman login'),
-                  SizedBox(height: 10),
-                  Text(
-                      'Berikut gambaran dari menu navigation bar pada aplikasi ini :'),
-                  Image(image: AssetImage('images/navbar.png')),
                 ],
               ),
             ),
